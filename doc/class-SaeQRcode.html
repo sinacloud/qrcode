@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class SaeQRcode</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Packages</h3>
+			<ul>
+				<li>
+					<a href="package-sae.html">
+						sae					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-SaeQRcode.html">SaeQRcode</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+<span>Package</span>			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class SaeQRcode</h1>
+
+
+	<div class="description">
+	<p>SAE 二维码服务.</p>
+
+<pre><span class="xlang">&lt;?php</span>
+<span class="php-comment">//二维码名片，格式参考：http://en.wikipedia.org/wiki/VCard</span>
+<span class="php-var">$vCard</span>  = <span class="php-quote">'BEGIN:VCARD'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'VERSION:4.0'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'FN:倒流'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'ORG:SINA Inc'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'TITLE:攻城师'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'TEL;WORK;VOICE:(010)62676155'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'TEL;HOME;VOICE:(010)88889999'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'TEL;TYPE=cell:18600005940'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'ADR;TYPE=work;LABEL=&quot;Office&quot;:理想国际大厦17层;北四环西路58号;海淀区;北京市;中国;100089'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'EMAIL:979137@qq.com'</span>.PHP_EOL;
+<span class="php-var">$vCard</span> .= <span class="php-quote">'END:VCARD'</span>;
+<span class="php-comment">//注：不同的扫描工具解码方式不一样，所以不是所有的二维码扫描工具都能唤起相关的功能</span>
+<span class="php-var">$types</span>  = <span class="php-keyword1">array</span>(
+    <span class="php-quote">'vCard'</span>  =&gt; <span class="php-var">$vCard</span>,
+    <span class="php-quote">'url'</span>    =&gt; <span class="php-quote">'http://sae.sina.com.cn'</span>,
+    <span class="php-quote">'tel'</span>    =&gt; <span class="php-quote">'tel:18600005940'</span>,
+    <span class="php-quote">'smsto'</span>  =&gt; <span class="php-quote">'smsto:18600005940:晚上继续嗨皮'</span>,
+    <span class="php-quote">'mailto'</span> =&gt; <span class="php-quote">'mailto:979137@qq.com?subject='</span>.<span class="php-keyword2">urlencode</span>(<span class="php-quote">'恭喜发财'</span>).<span class="php-quote">'&amp;body='</span>.<span class="php-keyword2">urlencode</span>(<span class="php-quote">'红包拿来'</span>),
+    <span class="php-quote">'skype'</span>  =&gt; <span class="php-quote">'skype:'</span>.<span class="php-keyword2">urlencode</span>(<span class="php-quote">'Skype用户名'</span>).<span class="php-quote">'?call'</span>,
+);
+
+<span class="php-var">$qr</span> = <span class="php-keyword1">new</span> SaeQRcode();
+<span class="php-comment">//设置二维码生成参数</span>
+<span class="php-comment">//二维码内容数据</span>
+<span class="php-var">$qr</span>-&gt;data   = <span class="php-var">$types</span>[<span class="php-quote">'vCard'</span>];
+<span class="php-comment">//容错率：L(7%)、M(15%)、Q(25%)、H(30%)，默认M，了解：http://baike.baidu.com/view/4144600.htm</span>
+<span class="php-var">$qr</span>-&gt;level  = <span class="php-quote">'L'</span>;
+<span class="php-comment">//二维码宽高（包含间距），为保证二维码更易识别，请尽量保持二维码为正方形，即宽高大致相等，默认200*200</span>
+<span class="php-var">$qr</span>-&gt;width  = <span class="php-num">300</span>;
+<span class="php-var">$qr</span>-&gt;height = <span class="php-num">300</span>;
+<span class="php-comment">//二维码图片边缘间距值，值越大，间距越宽，可自由调整，默认0</span>
+<span class="php-var">$qr</span>-&gt;margin = <span class="php-num">1</span>;
+<span class="php-comment">//在二维码正中间放置icon，默认为空，即不放置，支持绝对与相对地址</span>
+<span class="php-var">$qr</span>-&gt;icon   = __DIR__ . <span class="php-quote">'/logo.png'</span>;
+<span class="php-var">$qr</span>-&gt;icon   = <span class="php-quote">'logo.png'</span>;
+<span class="php-comment">//生成二维码图片，成功返回文件绝对地址（放在了SAE_TMP_PATH），失败返回false</span>
+<span class="php-var">$file</span> = <span class="php-var">$qr</span>-&gt;build();
+<span class="php-keyword1">if</span> (!<span class="php-var">$file</span>) {
+    <span class="php-keyword2">var_dump</span>(<span class="php-var">$qr</span>-&gt;errno(), <span class="php-var">$qr</span>-&gt;errmsg());
+    <span class="php-keyword1">exit</span>;
+}
+
+<span class="php-comment">//直接输出图片</span>
+<span class="php-comment">//header('Content-Type: image/png');</span>
+<span class="php-comment">//exit(file_get_contents($file));</span>
+
+<span class="php-comment">//根据实际需求，可上传至Storage</span>
+<span class="php-var">$name</span> = <span class="php-quote">'test/'</span>.<span class="php-keyword2">pathinfo</span>(<span class="php-var">$file</span>, PATHINFO_BASENAME);
+<span class="php-var">$domain</span> = <span class="php-quote">'public'</span>;
+<span class="php-var">$st</span> = <span class="php-keyword1">new</span> SaeStorage();
+<span class="php-var">$st</span>-&gt;upload(<span class="php-var">$domain</span>, <span class="php-var">$name</span>, <span class="php-var">$file</span>);
+<span class="php-var">$url</span> = <span class="php-keyword2">sprintf</span>(<span class="php-quote">'http://%s-%s.stor.sinaapp.com/%s'</span>, <span class="php-var">$_SERVER</span>[<span class="php-quote">'HTTP_APPNAME'</span>], <span class="php-var">$domain</span>, <span class="php-var">$name</span>);
+<span class="php-keyword1">echo</span> <span class="php-quote">'&lt;img src=&quot;'</span>.<span class="php-var">$url</span>.<span class="php-quote">'&quot;&gt;'</span>;
+<span class="xlang">?&gt;</span></pre>
+
+<p>错误码参考：<br /> - errno: 0         成功<br /> - errno: -1        二维码数据为空<br /> - errno: -2        容错率参数错误<br /> - errno: -3        宽高参数错误，必须为数字<br /> - errno: -4        生成二维码出错<br /> - errno: -10       二维码文件不存在或不支持的文件格式<br /> - errno: -11       icon文件不存在或不支持的文件格式<br /></p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+SaeObject
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>SaeQRcode</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> <a href="package-sae.html">sae</a><br>
+
+				<b>Copyright:</b>
+				©2015, Sina App Engine.<br>
+				<b>Author:</b>
+				979137@qq.com<br>
+				<b>Version:</b>
+				$Id$<br>
+			<b>Located at</b> <a href="source-class-SaeQRcode.html#3-241" title="Go to source code">saeqrcode.class.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="build" id="_build">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_build">#</a>
+		<code><a href="source-class-SaeQRcode.html#97-140" title="Go to source code">build</a>( )</code>
+
+		<div class="description short">
+			<p>生成二维码图片</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>生成二维码图片</p>
+
+
+
+
+
+				<h4>Desc</h4>
+				<div class="list">
+				</div>
+				<h4>Exception</h4>
+				<div class="list">
+						none<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="iconCover" id="_iconCover">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_iconCover">#</a>
+		<code><a href="source-class-SaeQRcode.html#142-182" title="Go to source code">iconCover</a>( )</code>
+
+		<div class="description short">
+			<p>icon覆盖</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>icon覆盖</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+				<h4>Desc</h4>
+				<div class="list">
+				</div>
+				<h4>Exception</h4>
+				<div class="list">
+						none<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="errmsg" id="_errmsg">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_errmsg">#</a>
+		<code><a href="source-class-SaeQRcode.html#184-198" title="Go to source code">errmsg</a>( )</code>
+
+		<div class="description short">
+			<p>获取错误信息</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>获取错误信息</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Desc</h4>
+				<div class="list">
+				</div>
+				<h4>Exception</h4>
+				<div class="list">
+						none<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="errno" id="_errno">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_errno">#</a>
+		<code><a href="source-class-SaeQRcode.html#200-214" title="Go to source code">errno</a>( )</code>
+
+		<div class="description short">
+			<p>获取错误码</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>获取错误码</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer
+				</div>
+
+
+				<h4>Desc</h4>
+				<div class="list">
+				</div>
+				<h4>Exception</h4>
+				<div class="list">
+						none<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fileType" id="_fileType">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_fileType">#</a>
+		<code><a href="source-class-SaeQRcode.html#216-240" title="Go to source code">fileType</a>( <span> <var>$file</var></span> )</code>
+
+		<div class="description short">
+			<p>取二进制文件头快速准确判断文件类型</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>取二进制文件头快速准确判断文件类型</p>
+
+
+
+
+
+				<h4>Desc</h4>
+				<div class="list">
+				</div>
+				<h4>Exception</h4>
+				<div class="list">
+						none<br>
+				</div>
+				<h4>Params</h4>
+				<div class="list">
+						$file 要判断的文件，支持相对和绝对路径<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="data" id="$data">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#87" title="Go to source code"><var>$data</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$data" class="anchor">#</a>
+				<code><span class="php-quote">''</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="level" id="$level">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#88" title="Go to source code"><var>$level</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$level" class="anchor">#</a>
+				<code><span class="php-quote">'M'</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="width" id="$width">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#89" title="Go to source code"><var>$width</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$width" class="anchor">#</a>
+				<code><span class="php-num">200</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="height" id="$height">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#90" title="Go to source code"><var>$height</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$height" class="anchor">#</a>
+				<code><span class="php-num">200</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="margin" id="$margin">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#91" title="Go to source code"><var>$margin</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$margin" class="anchor">#</a>
+				<code><span class="php-num">0</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="icon" id="$icon">
+		<td class="attributes"><code>
+			public  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-SaeQRcode.html#92" title="Go to source code"><var>$icon</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$icon" class="anchor">#</a>
+				<code><span class="php-quote">''</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
